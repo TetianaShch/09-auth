@@ -1,6 +1,11 @@
 import { api } from './api';
 import type { Note, FetchNotesParams } from '@/types/note';
-import type { User, AuthCredentials } from '@/types/user';
+import type { User } from '@/types/user';
+
+type AuthCredentials = {
+    email: string;
+    password: string;
+};
 
 export async function fetchNotes(params: FetchNotesParams) {
     const { data } = await api.get<Note[]>('/notes', { params });
@@ -22,11 +27,11 @@ export async function deleteNote(id: string) {
     return data;
 }
 
-// auth
 export async function register(payload: AuthCredentials) {
     const { data } = await api.post<User>('/auth/register', payload);
     return data;
 }
+
 
 export async function login(payload: AuthCredentials) {
     const { data } = await api.post<User>('/auth/login', payload);
