@@ -8,3 +8,10 @@ export interface Note {
   createdAt: string;
   updatedAt: string;
 }
+
+export type FetchNotesParams = {
+  page?: number;
+  perPage?: number;
+  search?: string;
+  tag?: string;
+};
