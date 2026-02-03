@@ -5,12 +5,15 @@ import { useState } from 'react';
 
 import { login } from '@/lib/api/clientApi';
 import { isAxiosError } from 'axios';
+import { useAuthStore } from '@/lib/store/authStore';
 
 import css from './SignInPage.module.css';
 
 export default function SignInPage() {
   const router = useRouter();
   const [error, setError] = useState<string>('');
+
+  const setUser = useAuthStore(s => s.setUser);
 
   const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -23,7 +26,8 @@ export default function SignInPage() {
     const password = String(formData.get('password') ?? '');
 
     try {
-      await login({ email, password });
+      const user = await login({ email, password });
+      setUser(user);
       router.push('/profile');
     } catch (err) {
       if (isAxiosError(err)) {
