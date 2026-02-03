@@ -1,7 +1,23 @@
+'use client';
+
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { logout } from '@/lib/api/clientApi';
 import css from './AuthNavigation.module.css';
 
 export default function AuthNavigation() {
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      router.push('/sign-in');
+      router.refresh();
+    } catch (e) {
+      console.error('Logout failed', e);
+    }
+  };
+
   return (
     <>
       <li className={css.navigationItem}>
@@ -12,7 +28,9 @@ export default function AuthNavigation() {
 
       <li className={css.navigationItem}>
         <p className={css.userEmail}>User email</p>
-        <button className={css.logoutButton}>Logout</button>
+        <button type="button" className={css.logoutButton} onClick={handleLogout}>
+          Logout
+        </button>
       </li>
 
       <li className={css.navigationItem}>

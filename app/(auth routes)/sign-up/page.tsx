@@ -10,7 +10,7 @@ export default function SignUpPage() {
   const router = useRouter();
   const [error, setError] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(false);
 
