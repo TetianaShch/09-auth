@@ -21,7 +21,7 @@ export default function Header() {
           <AuthNavigation />
 
           <li className={css.navigationItem}>
-            <Link href="/notes" className={css.navigationLink}>
+            <Link href="/notes/filter/all" className={css.navigationLink}>
               Notes
             </Link>
           </li>
