@@ -15,3 +15,10 @@ export type FetchNotesParams = {
   search?: string;
   tag?: string;
 };
+
+export type FetchNotesResponse = {
+  notes: Note[];
+  totalPages: number;
+};
+
+

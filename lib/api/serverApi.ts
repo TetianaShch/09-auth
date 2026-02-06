@@ -1,6 +1,7 @@
 import type { AxiosRequestConfig } from 'axios';
 import { api } from './api';
-import type { Note, FetchNotesParams } from '@/types/note';
+import type { Note } from '@/types/note';
+import type { FetchNotesParams, FetchNotesResponse } from '@/types/note';
 import type { User } from '@/types/user';
 
 function withCookies(cookies: string): AxiosRequestConfig {
@@ -12,7 +13,7 @@ function withCookies(cookies: string): AxiosRequestConfig {
 }
 
 export async function fetchNotes(params: FetchNotesParams, cookies: string) {
-    const { data } = await api.get<Note[]>('/notes', {
+    const { data } = await api.get<FetchNotesResponse>('/notes', {
         ...withCookies(cookies),
         params,
     });

@@ -1,5 +1,6 @@
 import { api } from './api';
-import type { Note, FetchNotesParams } from '@/types/note';
+import type { Note } from '@/types/note';
+import type { FetchNotesResponse, FetchNotesParams } from '@/types/note';
 import type { User } from '@/types/user';
 
 type AuthCredentials = {
@@ -8,7 +9,7 @@ type AuthCredentials = {
 };
 
 export async function fetchNotes(params: FetchNotesParams) {
-    const { data } = await api.get<Note[]>('/notes', { params });
+    const { data } = await api.get<FetchNotesResponse>('/notes', { params });
     return data;
 }
 
