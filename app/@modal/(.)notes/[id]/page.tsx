@@ -1,7 +1,8 @@
+import { cookies } from 'next/headers';
 import { HydrationBoundary, dehydrate, QueryClient } from '@tanstack/react-query';
 import { notFound } from 'next/navigation';
 
-import { fetchNoteById } from '@/lib/api';
+import { fetchNoteById } from '@/lib/api/serverApi';
 import NotePreviewClient from './NotePreview.client';
 
 type Props = {
@@ -13,10 +14,16 @@ export default async function NotePreviewPage({ params }: Props) {
 
   const queryClient = new QueryClient();
 
+  const cookieStore = await cookies();
+  const cookie = cookieStore
+    .getAll()
+    .map(({ name, value }) => `${name}=${value}`)
+    .join('; ');
+
   try {
     await queryClient.prefetchQuery({
       queryKey: ['note', id],
-      queryFn: () => fetchNoteById(id),
+      queryFn: () => fetchNoteById(id, cookie),
     });
   } catch {
     notFound();
