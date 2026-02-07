@@ -3,13 +3,16 @@
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-import { register } from '@/lib/api/clientApi';
+import { register, getMe } from '@/lib/api/clientApi';
+import { useAuthStore } from '@/lib/store/authStore';
+
 import css from './SignUpPage.module.css';
 
 export default function SignUpPage() {
   const router = useRouter();
   const [error, setError] = useState(false);
 
+  const setUser = useAuthStore(state => state.setUser);
   const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(false);
@@ -22,6 +25,9 @@ export default function SignUpPage() {
 
     try {
       await register({ email, password });
+      const user = await getMe();
+      setUser(user);
+
       router.push('/profile');
     } catch {
       setError(true);

@@ -1,4 +1,4 @@
-import type { AxiosRequestConfig } from 'axios';
+import type { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { api } from './api';
 import type { Note } from '@/types/note';
 import type { FetchNotesParams, FetchNotesResponse } from '@/types/note';
@@ -30,7 +30,7 @@ export async function getMe(cookies: string) {
     return data;
 }
 
-export async function checkSession(cookies: string) {
-    const { data } = await api.get<User | undefined>('/auth/session', withCookies(cookies));
-    return data;
+export async function checkSession(cookies: string): Promise<AxiosResponse<User | undefined>> {
+    return api.get<User | undefined>('/auth/session', withCookies(cookies));
 }
+

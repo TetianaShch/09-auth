@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
+import { cookies } from 'next/headers';
+import { getMe } from '@/lib/api/serverApi';
 
 import css from './ProfilePage.module.css';
 
@@ -9,7 +11,16 @@ export const metadata: Metadata = {
   description: 'User profile page',
 };
 
-export default function ProfilePage() {
+export default async function ProfilePage() {
+  const cookieStore = await cookies();
+
+  const cookieHeader = cookieStore
+    .getAll()
+    .map(c => `${c.name}=${c.value}`)
+    .join('; ');
+
+  const user = await getMe(cookieHeader);
+
   return (
     <main className={css.mainContent}>
       <div className={css.profileCard}>
@@ -23,7 +34,7 @@ export default function ProfilePage() {
 
         <div className={css.avatarWrapper}>
           <Image
-            src="/avatar.png"
+            src={user?.avatar}
             alt="User Avatar"
             width={120}
             height={120}

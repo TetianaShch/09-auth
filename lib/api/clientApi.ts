@@ -54,7 +54,10 @@ export async function getMe() {
     return data;
 }
 
-export async function updateMe(payload: Partial<User>) {
+export type UpdateMePayload = Partial<Pick<User, 'username' | 'avatar'>>;
+
+export async function updateMe(payload: UpdateMePayload) {
     const { data } = await api.patch<User>('/users/me', payload);
     return data;
 }
+
