@@ -43,8 +43,8 @@ export default async function ProfilePage() {
         </div>
 
         <div className={css.profileInfo}>
-          <p>Username: your_username</p>
-          <p>Email: your_email@example.com</p>
+          <p>Username: {user?.username}</p>
+          <p>Email: {user?.email}</p>
         </div>
       </div>
     </main>
